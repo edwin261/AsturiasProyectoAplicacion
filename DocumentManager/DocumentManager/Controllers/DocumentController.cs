@@ -29,8 +29,8 @@ namespace DocumentManager.Controllers
             if (file == null)
                 return BadRequest("Documento a cargar es requerido, favor verificar.");
 
-            var factory = new Domain.Services.DocumentManager();
-            var document = factory.Create(file.FileName, tagColor, isPrivate, listId);
+            var manager = new Domain.Services.DocumentManager();
+            var document = manager.Create(file.FileName, tagColor, isPrivate, listId);
 
             var folder = Path.Combine(_env.WebRootPath, "storage", listId.ToString());
             Directory.CreateDirectory(folder);
