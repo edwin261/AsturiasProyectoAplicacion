@@ -25,15 +25,15 @@ namespace DocumentManager.Controllers
             if (!PasswordManager.Instance.Validate(password!))
                 documents = [.. documents.Where(d => !d.IsPrivate)];
 
-            IFilterService? strategy = null;
+            IFilterService? fileService = null;
 
             if (!string.IsNullOrEmpty(tag))
-                strategy = new TagFilterService(tag);
+                fileService = new TagFilterService(tag);
             else if (listId.HasValue)
-                strategy = new ListFilterService(listId.Value);
+                fileService = new ListFilterService(listId.Value);
 
-            if (strategy != null)
-                documents = [.. strategy.Filter(documents)];
+            if (fileService != null)
+                documents = [.. fileService.Filter(documents)];
 
             return Ok(documents);
         }
